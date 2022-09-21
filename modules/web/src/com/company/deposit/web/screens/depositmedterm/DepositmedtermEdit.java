@@ -95,7 +95,7 @@ public class DepositmedtermEdit extends StandardEditor<Depositmedterm> {
                 + getEditedEntity().getDeposit() + "-" + dateTimeNow;
 
 
-        //I check if the folders qrCodeImage exist in current users, if not exist I created this directory
+        //I check if the folder qrCodeImage exist in current users, if not exist I created this directory
         String currentUserHomeDir = System.getProperty("user.home");
         String qrCodeImageFolder = currentUserHomeDir + File.separator + "qrCodeImage";
         File theDir = new File(qrCodeImageFolder);
