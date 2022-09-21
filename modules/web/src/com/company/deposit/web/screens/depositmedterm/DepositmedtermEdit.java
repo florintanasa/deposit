@@ -61,7 +61,7 @@ public class DepositmedtermEdit extends StandardEditor<Depositmedterm> {
     public void onUploadFieldFileUploadSucceed(FileUploadField.FileUploadSucceedEvent event) {
         File file = fileUploadingAPI.getFile(imageqrcodeUpload.getFileId());
         if(file != null) {
-            notifications.create().withCaption("Fișierul este încărcat temporar la" + file.getAbsolutePath()).show();
+           // notifications.create().withCaption("Fișierul este încărcat temporar la" + file.getAbsolutePath()).show();
         }
 
         FileDescriptor fd = imageqrcodeUpload.getFileDescriptor();
