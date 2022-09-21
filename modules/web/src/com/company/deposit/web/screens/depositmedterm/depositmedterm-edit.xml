@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://depositmedtermEdit.caption"
+        focusComponent="form"
+        messagesPack="com.company.deposit.web.screens.depositmedterm">
+    <data>
+        <instance id="depositmedtermDc"
+                  class="com.company.deposit.entity.Depositmedterm">
+            <view extends="depositmedterm-all-view">
+                <property name="qrcode" view="_minimal"/>
+            </view>
+            <loader/>
+        </instance>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="editActions" spacing="true">
+        <form id="form" dataContainer="depositmedtermDc">
+            <column width="350px">
+                <textField id="accenumbField" property="accenumb"/>
+                <textField id="depositField" property="deposit"/>
+                <textField id="yearstoreField" property="yearstore"/>
+                <textField id="yearmultiField" property="yearmulti"/>
+                <textField id="multiplyField" property="multiply"/>
+                <textField id="yeargermField" property="yeargerm"/>
+                <textField id="percentageField" property="percentage" maxLength="3"/>
+                <textField id="stockField" property="stock" maxLength="10"/>
+                <textField id="sumstockField" property="sumstock" maxLength="12"/>
+                <image id="imagineqrcode" height="350px" scaleMode="CONTAIN" width="350px" property="qrcode"/>
+                <hbox align="MIDDLE_CENTER"
+                      spacing="false">
+                    <button id="generateqrcodeBtn"
+                            align="MIDDLE_CENTER"
+                            caption="msg://generateqrcodeBtn"
+                            description="msg://descgenerateqrcodeBtn"
+                            invoke="onGenerateQrCodeBtnClick"/>
+                    <upload id="imageqrcodeUpload"
+                            property="qrcode"
+                            fileStoragePutMode="MANUAL"
+                            permittedExtensions=".png,.jpg,.jpeg"
+                            align="MIDDLE_CENTER"
+                            uploadButtonCaption="msg://qrcodeUpload"
+                            description="msg://descimageqrcodeUpload"/>
+                    <button id="downloadImageqrcodeBtn"
+                            align="MIDDLE_CENTER"
+                            caption="msg://downloadImageqrcodeBtn"
+                            description="msg://descdownloadImageqrcodeBtn"
+                            invoke="onDownloadImageBtnClick"/>
+                    <button id="clearImageqrcodeBtn"
+                            align="MIDDLE_CENTER"
+                            caption="msg://clearImageqrcodeBtn"
+                            description="msg://descclearImageqrcodeBtn"
+                            invoke="onClearImageBtnClick"/>
+                </hbox>
+            </column>
+        </form>
+        <hbox id="editActions" spacing="true">
+            <button id="commitAndCloseBtn" action="windowCommitAndClose"/>
+            <button id="closeBtn" action="windowClose"/>
+        </hbox>
+    </layout>
+</window>

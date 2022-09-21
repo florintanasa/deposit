@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://depositmedtermBrowse.caption"
+        focusComponent="depositmedtermsTable"
+        messagesPack="com.company.deposit.web.screens.depositmedterm">
+    <data readOnly="true">
+        <collection id="depositmedtermsDc"
+                    class="com.company.deposit.entity.Depositmedterm">
+            <view extends="depositmedterm-all-view"/>
+            <loader id="depositmedtermsDl">
+                <query>
+                    <![CDATA[select e from deposit_Depositmedterm e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="depositmedtermsTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="depositmedtermsTable"
+                dataLoader="depositmedtermsDl">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="depositmedtermsTable"
+                    width="100%"
+                    dataContainer="depositmedtermsDc"
+                    multiselect="true">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+                <action id="refresh" type="refresh"/>
+                <action id="excel" type="excel"/>
+            </actions>
+            <columns>
+                <column id="accenumb"/>
+                <column id="deposit"/>
+                <column id="yearstore"/>
+                <column id="yearmulti"/>
+                <column id="multiply"/>
+                <column id="yeargerm"/>
+                <column id="percentage"/>
+                <column id="stock"/>
+                <column id="sumstock"/>
+                <column id="qrcode"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="depositmedtermsTable.create"/>
+                <button id="editBtn" action="depositmedtermsTable.edit"/>
+                <button id="removeBtn" action="depositmedtermsTable.remove"/>
+                <button id="refreshBtn" action="depositmedtermsTable.refresh"/>
+                <button id="excelBtn" action="depositmedtermsTable.excel"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>
