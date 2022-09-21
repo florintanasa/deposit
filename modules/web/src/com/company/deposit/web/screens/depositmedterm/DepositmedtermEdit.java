@@ -17,12 +17,16 @@ import com.haulmont.cuba.gui.export.ExportFormat;
 import com.haulmont.cuba.gui.screen.*;
 import com.company.deposit.entity.Depositmedterm;
 import com.haulmont.cuba.gui.upload.FileUploadingAPI;
+import org.springframework.format.annotation.DateTimeFormat;
 
 
 import javax.inject.Inject;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
 @UiController("deposit_Depositmedterm.edit")
@@ -78,15 +82,39 @@ public class DepositmedtermEdit extends StandardEditor<Depositmedterm> {
     }
 
     public void onGenerateQrCodeBtnClick() throws WriterException, IOException {
+        //I got the current date and time
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDateTime currentDate = LocalDate.now().atStartOfDay();
+        String currentDateToday = dateFormat.format(currentDate);
+        DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+        String dateTimeNow = dateTimeFormat.format(now);
+
         //the date necessary to input in QR code
         String data = getEditedEntity().getAccenumb() + "-" + getEditedEntity().getYearstore() + "-"
+                + getEditedEntity().getDeposit() + "-" + dateTimeNow;
+
+
+        //I check if the folders qrCodeImage exist in current users, if not exist I created this directory
+        String currentUserHomeDir = System.getProperty("user.home");
+        String qrCodeImageFolder = currentUserHomeDir + File.separator + "qrCodeImage";
+        File theDir = new File(qrCodeImageFolder);
+        if (!theDir.exists()) {
+            theDir.mkdirs();
+        }
+        //I set the file name for qrCodeImage
+        String fileName = getEditedEntity().getAccenumb() + "-" + getEditedEntity().getYearstore() + "-"
                 + getEditedEntity().getDeposit();
-        String path = "/home/florin/QRCodeGenerate/qrcode.jpg";
+        String qrCodeImageFile = qrCodeImageFolder + File.separator + currentDateToday+ "-" + fileName + ".jpg";
+
         //encode the data in format QR_CODE with width 500 and heigh 500
         BitMatrix matrix = new MultiFormatWriter().encode(data, BarcodeFormat.QR_CODE, 500, 500);
+
         //Write the matrix in the path
-        MatrixToImageWriter.writeToPath(matrix, "jpg", Paths.get(path));
-        notifications.create().withCaption("Codul QR creat cu succes");
+        MatrixToImageWriter.writeToPath(matrix, "jpg", Paths.get(qrCodeImageFile));
+
+        //Notification for user
+        notifications.create().withCaption("Codul QR creat cu succes").show();
     }
 
     public void onDownloadImageBtnClick(){
